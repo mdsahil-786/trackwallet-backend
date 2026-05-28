@@ -27,6 +27,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
@@ -60,7 +61,9 @@ public class SecurityConfiguration {
                 .cors(cors -> {})
 
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session.sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
                 )
 
                 .authorizeHttpRequests(auth -> auth
@@ -69,6 +72,13 @@ public class SecurityConfiguration {
                         .permitAll()
 
                         .requestMatchers("/api/public/**")
+                        .permitAll()
+
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        )
                         .permitAll()
 
                         .requestMatchers("/api/v1/admin/**")
@@ -82,7 +92,9 @@ public class SecurityConfiguration {
                 )
 
                 .exceptionHandling(exception ->
-                        exception.authenticationEntryPoint(customAuthEntryPoint)
+                        exception.authenticationEntryPoint(
+                                customAuthEntryPoint
+                        )
                 )
 
                 .authenticationProvider(authenticationProvider())
@@ -95,3 +107,4 @@ public class SecurityConfiguration {
         return http.build();
     }
 }
+

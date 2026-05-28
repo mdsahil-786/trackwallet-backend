@@ -1,4 +1,4 @@
-package com.sahil.trackwallet.dto.transaction;
+package com.sahil.trackwallet.dtos.transaction;
 
 import com.sahil.trackwallet.enums.Category;
 import com.sahil.trackwallet.enums.TransactionType;

@@ -1,4 +1,4 @@
-package com.sahil.trackwallet.dto.auth;
+package com.sahil.trackwallet.dtos.auth;
 
 import lombok.*;
 

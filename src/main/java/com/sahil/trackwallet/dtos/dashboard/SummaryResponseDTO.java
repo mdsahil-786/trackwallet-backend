@@ -1,4 +1,4 @@
-package com.sahil.trackwallet.dto.dashboard;
+package com.sahil.trackwallet.dtos.dashboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

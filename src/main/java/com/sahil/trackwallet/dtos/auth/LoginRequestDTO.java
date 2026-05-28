@@ -1,4 +1,4 @@
-package com.sahil.trackwallet.dto.auth;
+package com.sahil.trackwallet.dtos.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

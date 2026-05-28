@@ -2,13 +2,12 @@ package com.sahil.trackwallet.services;
 
 
 import com.sahil.trackwallet.configs.security.JwtUtil;
-import com.sahil.trackwallet.dto.auth.AuthResponseDTO;
-import com.sahil.trackwallet.dto.auth.LoginRequestDTO;
-import com.sahil.trackwallet.dto.auth.RegisterRequestDTO;
+import com.sahil.trackwallet.dtos.auth.AuthResponseDTO;
+import com.sahil.trackwallet.dtos.auth.LoginRequestDTO;
+import com.sahil.trackwallet.dtos.auth.RegisterRequestDTO;
 import com.sahil.trackwallet.entity.User;
 import com.sahil.trackwallet.enums.Role;
 import com.sahil.trackwallet.repositories.UserRepository;
-import com.sahil.trackwallet.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

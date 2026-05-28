@@ -1,8 +1,8 @@
 package com.sahil.trackwallet.controllers;
 
-import com.sahil.trackwallet.dto.auth.AuthResponseDTO;
-import com.sahil.trackwallet.dto.auth.LoginRequestDTO;
-import com.sahil.trackwallet.dto.auth.RegisterRequestDTO;
+import com.sahil.trackwallet.dtos.auth.AuthResponseDTO;
+import com.sahil.trackwallet.dtos.auth.LoginRequestDTO;
+import com.sahil.trackwallet.dtos.auth.RegisterRequestDTO;
 import com.sahil.trackwallet.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

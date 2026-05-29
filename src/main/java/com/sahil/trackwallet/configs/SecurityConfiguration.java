@@ -35,7 +35,9 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider authProvider =
-                new DaoAuthenticationProvider(userDetailsService);
+                new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailsService);
 
         authProvider.setPasswordEncoder(passwordEncoder());
 
@@ -58,7 +60,8 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
 
-                .cors(cors -> {})
+                .cors(cors -> {
+                })
 
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
@@ -68,25 +71,32 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Public Auth APIs
                         .requestMatchers("/api/v1/auth/**")
                         .permitAll()
 
+                        // Public APIs
                         .requestMatchers("/api/public/**")
                         .permitAll()
 
+                        // Swagger/OpenAPI
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html"
+                                "/swagger-ui.html",
+                                "/swagger-ui/index.html"
                         )
                         .permitAll()
 
+                        // Admin APIs
                         .requestMatchers("/api/v1/admin/**")
                         .hasRole("ADMIN")
 
+                        // User APIs
                         .requestMatchers("/api/v1/user/**")
                         .hasAnyRole("USER", "ADMIN")
 
+                        // All other APIs
                         .anyRequest()
                         .authenticated()
                 )
@@ -107,4 +117,3 @@ public class SecurityConfiguration {
         return http.build();
     }
 }
-

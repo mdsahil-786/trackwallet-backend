@@ -1,46 +1,61 @@
-# TrackWallet - Personal Finance Tracker Backend
+# TrackWallet — Personal Finance Tracker Backend
 
-## Overview
+TrackWallet is a production-ready backend application built using Spring Boot that helps users manage personal finances through secure REST APIs.
 
-TrackWallet is a backend REST API application built using Spring Boot that helps users manage their personal finances efficiently.
+The application provides features such as JWT authentication, transaction management, filtering, pagination, transaction summaries, and Swagger API documentation.
 
-Users can:
-
-* Register and log in securely
-* Add income and expense transactions
-* Categorize transactions
-* Edit and delete transactions
-* View spending summaries
-* Filter transactions
-* Access APIs using Swagger documentation
-
-This project was developed as a Personal Finance Tracker assessment project.
+This project was built to practice backend engineering concepts including authentication, authorization, API design, database integration, deployment, and cloud hosting.
 
 ---
 
-# Features Implemented
+# Live Deployment
 
-## Authentication
+## Production API
+
+https://enchanting-playfulness-production-42cf.up.railway.app
+
+## Swagger Documentation
+
+https://enchanting-playfulness-production-42cf.up.railway.app/swagger-ui/index.html
+
+---
+
+# Features
+
+## Authentication & Security
 
 * User Registration
 * User Login
 * JWT-based Authentication
 * Role-based Authorization
+* BCrypt Password Encryption
+* Stateless Session Management using Spring Security
 
 ---
 
 ## Transaction Management
+
+Users can:
 
 * Create Transactions
 * View Transactions
 * Update Transactions
 * Delete Transactions
 
+Each transaction supports:
+
+* title
+* amount
+* category
+* transaction type
+* description
+* transaction date
+
 ---
 
-## Categories
+## Transaction Categories
 
-Supported categories include:
+Supported categories:
 
 * FOOD
 * TRAVEL
@@ -53,48 +68,53 @@ Supported categories include:
 
 ---
 
-## Dashboard Features
+## Dashboard & Summary APIs
+
+The application provides transaction summary APIs including:
 
 * Total Income
 * Total Expense
-* Balance Summary
+* Current Balance
 
 ---
 
-## Search & Filters
+## Search & Filtering
 
-* Filter by Category
-* Filter by Transaction Type
-* Filter by Date Range
+Users can filter transactions using:
+
+* Category
+* Transaction Type
+* Date Range
+
+Example:
+
+
+GET /api/v1/transactions/type/EXPENSE
+
+
+
+GET /api/v1/transactions/category/FOOD
+
+
+
+GET /api/v1/transactions/date-range?startDate=2026-05-01&endDate=2026-05-31
+
 
 ---
 
 ## Pagination & Sorting
 
-* Pagination Support
-* Sorting Support
+Pagination support has been implemented for large datasets.
 
 Example:
 
-```http
+
 GET /api/v1/transactions/paged?page=0&size=5&sortBy=amount
-```
+
 
 ---
 
-## API Documentation
-
-Swagger/OpenAPI documentation integrated.
-
-Swagger URL:
-
-```text
-http://localhost:8080/swagger-ui/index.html
-```
-
----
-
-# Tech Stack Used
+# Tech Stack
 
 ## Backend
 
@@ -124,22 +144,29 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
+## Deployment & DevOps
+
+* Railway Deployment
+* Docker-based Deployment
+
+---
+
 ## Build Tool
 
 * Gradle
 
 ---
 
-## Utilities
+## Additional Libraries
 
 * Lombok
-* Dotenv
+* JJWT
 
 ---
 
-# Project Structure
+# Project Architecture
 
-```text
+
 src/main/java/com/sahil/trackwallet
 │
 ├── configs
@@ -152,111 +179,150 @@ src/main/java/com/sahil/trackwallet
 ├── repositories
 ├── security
 ├── services
-```
 
 ---
 
 # API Endpoints
 
-## Authentication APIs
+# Authentication APIs
 
-### Register
+## Register User
 
-```http
+
 POST /api/v1/auth/register
-```
 
-### Login
 
-```http
+## Login User
+
+
 POST /api/v1/auth/login
-```
+
 
 ---
 
-## Transaction APIs
+# Transaction APIs
 
-### Create Transaction
+## Create Transaction
 
-```http
+
 POST /api/v1/transactions
-```
 
-### Get All Transactions
 
-```http
+## Get All Transactions
+
+
 GET /api/v1/transactions
-```
 
-### Update Transaction
 
-```http
+## Update Transaction
+
+
 PUT /api/v1/transactions/{id}
-```
 
-### Delete Transaction
 
-```http
+## Delete Transaction
+
+
 DELETE /api/v1/transactions/{id}
-```
+
 
 ---
 
-## Dashboard APIs
+# Summary APIs
 
-### Get Summary
+## Get Financial Summary
 
-```http
+
 GET /api/v1/transactions/summary
-```
+
 
 ---
 
-## Filter APIs
+# Filter APIs
 
-### Filter by Category
+## Filter by Category
 
-```http
+
 GET /api/v1/transactions/category/{category}
-```
 
-### Filter by Type
 
-```http
+## Filter by Transaction Type
+
+
 GET /api/v1/transactions/type/{type}
-```
 
-### Filter by Date Range
 
-```http
+## Filter by Date Range
+
 GET /api/v1/transactions/date-range?startDate=2026-05-01&endDate=2026-05-31
-```
+
 
 ---
 
-## Pagination API
+# Pagination API
 
-```http
+
 GET /api/v1/transactions/paged?page=0&size=5&sortBy=createdAt
-```
+
 
 ---
 
-# Project Setup Instructions
+# Authentication Flow
+
+1. User registers using the register API
+2. User logs in using credentials
+3. Server generates JWT token
+4. Client sends JWT token in Authorization header
+5. JwtAuthFilter validates the token
+6. Protected APIs become accessible
+
+---
+
+# Security Implementation
+
+* JWT Token Authentication
+* Stateless Authentication
+* BCrypt Password Encoding
+* Protected REST APIs
+* Role-based Authorization
+* Spring Security Filter Chain
+
+---
+
+# Swagger Documentation
+
+Swagger UI has been integrated for API testing and documentation.
+
+Swagger URL:
+
+
+https://enchanting-playfulness-production-42cf.up.railway.app/swagger-ui/index.html
+
+
+Features:
+
+* API Testing
+* JWT Authorization Support
+* Request/Response Models
+* Interactive API Documentation
+
+---
+
+# Local Setup Instructions
 
 ## 1. Clone Repository
 
-```bash
+
 git clone <your-github-repository-url>
-```
+
 
 ---
 
-## 2. Navigate to Project
+## 2. Navigate to Project Directory
 
-```bash
+
 cd TrackWallet
-```
+
 
 ---
 
@@ -277,7 +343,6 @@ JWT_EXPIRATION=1296000000
 
 ## 4. Configure application.properties
 
-```properties
 spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USERNAME}
 spring.datasource.password=${DB_PASSWORD}
@@ -286,46 +351,51 @@ server.port=8080
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-```
+
 
 ---
 
 ## 5. Run Application
 
-```bash
+
 ./gradlew bootRun
-```
+
 
 ---
 
-# Testing APIs
+# API Testing
 
-You can test APIs using:
+The APIs can be tested using:
 
 * Swagger UI
 * Postman
 
 Swagger:
 
-```text
-http://localhost:8080/swagger-ui/index.html
-```
+
+https://enchanting-playfulness-production-42cf.up.railway.app/swagger-ui/index.html
+
 
 ---
 
 # Future Improvements
 
+Planned improvements for future versions:
+
 * Budget Management
 * Monthly Analytics
 * Charts & Reports
 * Email Notifications
-* Docker Deployment
+* Redis Caching
+* Refresh Token Authentication
+* Microservices Architecture
 * Frontend Integration
 
 ---
 
 # Author
 
-Mohammad Sahil
+## Mohammad Sahil
 
-ABES Engineering College
+Backend Developer | Java | Spring Boot | REST APIs | JWT Authentication
+

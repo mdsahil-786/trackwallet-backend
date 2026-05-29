@@ -22,7 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final CustomUserDetailsService userDetailsService;
+
     private final CustomAuthEntryPoint customAuthEntryPoint;
+
     private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
@@ -58,57 +60,74 @@ public class SecurityConfiguration {
     ) throws Exception {
 
         http
+
+                // Disable CSRF
                 .csrf(csrf -> csrf.disable())
 
+                // Enable CORS
                 .cors(cors -> {
                 })
 
+                // Stateless Session
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
 
+                // Authorization Rules
                 .authorizeHttpRequests(auth -> auth
 
-                        // Public Auth APIs
-                        .requestMatchers("/api/v1/auth/**")
-                        .permitAll()
-
-                        // Public APIs
-                        .requestMatchers("/api/public/**")
-                        .permitAll()
-
-                        // Swagger/OpenAPI
+                        // Swagger & OpenAPI
                         .requestMatchers(
-                                "/v3/api-docs/**",
+                                "/",
+                                "/error",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/swagger-ui/index.html"
-                        )
-                        .permitAll()
+                                "/swagger-ui/index.html",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+
+                        // Authentication APIs
+                        .requestMatchers(
+                                "/api/v1/auth/**"
+                        ).permitAll()
+
+                        // Public APIs
+                        .requestMatchers(
+                                "/api/public/**"
+                        ).permitAll()
 
                         // Admin APIs
-                        .requestMatchers("/api/v1/admin/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers(
+                                "/api/v1/admin/**"
+                        ).hasRole("ADMIN")
 
                         // User APIs
-                        .requestMatchers("/api/v1/user/**")
-                        .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(
+                                "/api/v1/user/**"
+                        ).hasAnyRole("USER", "ADMIN")
 
-                        // All other APIs
+                        // All Remaining APIs
                         .anyRequest()
                         .authenticated()
                 )
 
+                // Exception Handling
                 .exceptionHandling(exception ->
                         exception.authenticationEntryPoint(
                                 customAuthEntryPoint
                         )
                 )
 
-                .authenticationProvider(authenticationProvider())
+                // Authentication Provider
+                .authenticationProvider(
+                        authenticationProvider()
+                )
 
+                // JWT Filter
                 .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
